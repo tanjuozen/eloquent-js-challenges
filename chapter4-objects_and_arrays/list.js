@@ -29,3 +29,31 @@ function nth(list, index) {
   }
   return nth(list.rest, index - 1);
 }
+
+function deepEqual(first, second) {
+  if (first === second) {
+    return true;
+  }
+  if (
+    first == null ||
+    second == null ||
+    typeof first != "object" ||
+    typeof second != "object"
+  ) {
+    return false;
+  }
+
+  var firstPropCount = 0,
+    secondPropCount = 0;
+
+  for (prop in first) {
+    firstPropCount += 1;
+  }
+  for (prop in second) {
+    secondPropCount += 1;
+    if (!(prop in first) || !deepEqual(first[prop], second[prop])) {
+      return false;
+    }
+  }
+  return firstPropCount == secondPropCount;
+}
